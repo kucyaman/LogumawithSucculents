@@ -13,6 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // エリアデータを投入
+        $this->call([
+            AreaSeeder::class,
+        ]);
+
+        // 都道府県データを投入
+        $this->call([
+            PrefectureSeeder::class,
+        ]);
+
         // User::factory(10)->create();
 
         User::factory()->create([

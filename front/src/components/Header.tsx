@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, Button, Menu, MenuItem } from '@mui/material';
+import { useAuth } from '../contexts/AuthContext';
 
 const menuItems = ['日記', 'お手入れLog', 'レポート', 'カレンダー'];
 
 const Header: React.FC = () => {
+  const { user, logout } = useAuth();
   const [isMyPosts, setIsMyPosts] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handlePostTypeClick = () => {
     setIsMyPosts(!isMyPosts);
+  };
+
+  const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleMenuClose();
   };
 
   return (
@@ -29,16 +45,38 @@ const Header: React.FC = () => {
 
       {/* ユーザーアイコンと投稿タイプ切り替え */}
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 2 }}>
-        <Avatar sx={{ width: 56, height: 56, bgcolor: '#ccc' }} />
+        <Avatar 
+          sx={{ 
+            width: 56, 
+            height: 56, 
+            bgcolor: '#e75480',
+            cursor: 'pointer',
+            '&:hover': {
+              opacity: 0.8,
+            },
+          }}
+          onClick={handleAvatarClick}
+        >
+          {user?.name?.charAt(0) || 'U'}
+        </Avatar>
         <Typography 
           variant="body2" 
           sx={{ 
             mt: 1, 
             color: '#444',
+            fontWeight: 'bold',
+          }}
+        >
+          {user?.name || 'ユーザー'}
+        </Typography>
+        <Typography 
+          variant="body2" 
+          sx={{ 
+            color: '#666',
             cursor: 'pointer',
             transition: 'color 0.2s ease',
             '&:hover': {
-              color: '#666',
+              color: '#888',
             },
           }}
           onClick={handlePostTypeClick}
@@ -46,6 +84,25 @@ const Header: React.FC = () => {
           {isMyPosts ? 'わたしの投稿' : 'みんなの投稿'}
         </Typography>
       </Box>
+
+      {/* ユーザーメニュー */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <MenuItem onClick={handleLogout}>
+          ログアウト
+        </MenuItem>
+      </Menu>
 
       {/* メニュータブ */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, height: 40 }}>
