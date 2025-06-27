@@ -1,4 +1,11 @@
 # Laravel + React + MySQL Docker プロジェクト
+## AI駆動開発　
+- cursorを使用
+- Reactを導入し学習と並行で開発
+- 以前作成したLoguaをブラッシュアップ
+- - https://github.com/kucyaman/LogumawithSucculentsJavaJspServlet
+- - https://github.com/kucyaman/LogumawithSucculentsLaravel
+- - https://github.com/kucyaman/Loguma_with_Succulents_ver1
 
 ## プロジェクトルール
 - フロントエンドのUIコンポーネントにはMUI（Material-UI）を使用すること

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'prefecture_id',
     ];
 
     /**
@@ -44,5 +45,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * 都道府県とのリレーション
+     */
+    public function prefecture()
+    {
+        return $this->belongsTo(Prefecture::class);
     }
 }
